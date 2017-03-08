@@ -12,6 +12,9 @@ namespace ShoppingListApp
         public MainPage()
         {
             InitializeComponent();
+            //var ex = new Exception("Testing HockeyApps crash implementation");
+            //throw ex;
+            
         }
     }
 }
