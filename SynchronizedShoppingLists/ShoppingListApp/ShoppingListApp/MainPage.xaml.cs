@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoppingListApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace ShoppingListApp
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = new MainPageViewModel();
             //var ex = new Exception("Testing HockeyApps crash implementation");
             //throw ex;
             

@@ -241,3 +241,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /SynchronizedShoppingLists/ShoppingListApp/ShoppingListApp.Android/Models/ApiKeys.cs
+/SynchronizedShoppingLists/ShoppingListApp/ShoppingListApp/Models/ApiKeys.cs
