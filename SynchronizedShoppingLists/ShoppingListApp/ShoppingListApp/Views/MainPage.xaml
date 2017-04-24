@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ShoppingListApp"
+             x:Class="ShoppingListApp.MainPage">
+    <StackLayout>
+        <StackLayout Padding="40">
+            <Label Text="Regular label" />
+            <Entry Placeholder="type here" />
+            <Button Text="OK" />
+            <BoxView Color="Yellow" />
+            <Switch />
+        </StackLayout>
+        <Label Text="ShoppingLists" 
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
+        <ListView x:Name="ShoppingListView" ItemsSource ="{Binding AllShoppingLists}">
+            <ListView.ItemTemplate>
+                <DataTemplate >
+                    <ViewCell >
+                        <ViewCell.View >
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Namn: "/>
+                                <Label Text ="{Binding Name}" FontSize="16" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+
+            <!--<ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>-->
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
