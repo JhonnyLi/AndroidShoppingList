@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace ShoppingListApp
@@ -13,10 +14,9 @@ namespace ShoppingListApp
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new MainPageViewModel();
+            this.BindingContext = new MainPageViewModel();
             //var ex = new Exception("Testing HockeyApps crash implementation");
             //throw ex;
-            
         }
     }
 }
