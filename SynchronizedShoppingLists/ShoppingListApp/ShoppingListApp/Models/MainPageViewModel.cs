@@ -34,7 +34,7 @@ namespace ShoppingListApp.Models
             AllShoppingLists = new List<ShoppingList>();
             AllItems = new List<Item>();
             Messages = new ObservableCollection<Message>();
-            Name = "Android";
+            Name = "Androids";
             _client = new HttpClient();
             _signalRClient = new Client(Name,this);
             GetAllShoppingLists();
@@ -70,26 +70,19 @@ namespace ShoppingListApp.Models
             catch (Exception ex)
             {
                 var error = ex.Message;
-                var breakit = "";
             }
             return model;
         }
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            _signalRClient.Send("Hej");
-        }
-
-        private void onMessageRecieved(object sender, Message m)
-        {
-            var dummy = m;
-        }
-
         
+        //private void onMessageRecieved(object sender, Message m)
+        //{
+        //    var dummy = m;
+        //}
 
         private void OnButtonClicked()
         {
            _signalRClient.Send(ChatMessage);
-            ChatMessage = "";
+            ChatMessage = string.Empty;
            
         }
     }

@@ -11,12 +11,21 @@ namespace ShoppingListApp
 {
     public partial class MainPage : ContentPage
     {
+        public MainPageViewModel _vm;
         public MainPage()
         {
+            _vm = new MainPageViewModel();
             InitializeComponent();
-            this.BindingContext = new MainPageViewModel();
-            //var ex = new Exception("Testing HockeyApps crash implementation");
-            //throw ex;
+            //Navigation.PushModalAsync(new ShoppingListApp.Views.LoginPage());
+            LoginModal();
+            this.BindingContext = _vm;
+     
         }
+
+        async void LoginModal()
+        {
+            await Navigation.PushModalAsync(new Views.LoginPage(_vm.Name));
+        }
+
     }
 }

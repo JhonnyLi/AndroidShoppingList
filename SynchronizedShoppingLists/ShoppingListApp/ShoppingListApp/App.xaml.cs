@@ -12,8 +12,7 @@ namespace ShoppingListApp
         public App()
         {
             InitializeComponent();
-
-            MainPage = new ShoppingListApp.MainPage();
+            MainPage = new NavigationPage(new ShoppingListApp.MainPage());
         }
 
         protected override void OnStart()

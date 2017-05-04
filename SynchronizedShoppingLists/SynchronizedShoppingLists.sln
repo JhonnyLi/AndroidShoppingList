@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingListApp", "Shopping
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingListApp.iOS", "ShoppingListApp\ShoppingListApp.iOS\ShoppingListApp.iOS.csproj", "{CC17A480-80DB-46A6-AAAA-DAAC95BB91FC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{D198E48A-CD08-4459-8C1F-C8D71D5836B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -108,5 +110,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6715CABC-9F3C-43C8-9F86-4CAC270B35A1} = {D198E48A-CD08-4459-8C1F-C8D71D5836B5}
+		{CC17A480-80DB-46A6-AAAA-DAAC95BB91FC} = {D198E48A-CD08-4459-8C1F-C8D71D5836B5}
 	EndGlobalSection
 EndGlobal

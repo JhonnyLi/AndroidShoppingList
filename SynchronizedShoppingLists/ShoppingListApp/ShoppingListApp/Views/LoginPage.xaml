@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingListApp.Views.LoginPage"
+             Title="LoginPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="LoginCommand"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <StackLayout Padding="10">
+            <Button Text="Facebook" FontSize="Large" BackgroundColor="Blue" HorizontalOptions="FillAndExpand"/>
+            <Button Text="Google" FontSize="Large" BackgroundColor="Red" HorizontalOptions="FillAndExpand"/>
+            <Entry Text="{Binding UserName, Mode=TwoWay}" Placeholder="Username" />
+            <Label Text="Login" FontSize="40"/>
+            <Button Text="Login" Command="{Binding LoginCommand}"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
