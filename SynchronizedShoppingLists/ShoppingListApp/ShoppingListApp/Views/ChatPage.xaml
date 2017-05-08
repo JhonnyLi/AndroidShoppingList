@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingListApp.Views.ChatPage">
+
+    <StackLayout Padding="0, 100, 0, 20" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand">
+        <Label Text="Chatten yo!"></Label>
+        <ListView x:Name="ShoppingListChatView" ItemsSource ="{Binding Messages, Mode=TwoWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate >
+                    <ViewCell >
+                        <ViewCell.View >
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text ="{Binding Name}" FontSize="16" />
+                                <Label Text =":" FontSize="16" />
+                                <Label Text ="{Binding Text}" FontSize="16" VerticalOptions="FillAndExpand" />
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout Padding="20">
+            <Label Text ="{Binding UserName, Mode=TwoWay}" FontSize="16" VerticalOptions="CenterAndExpand" HorizontalOptions="End"/>
+            <Entry x:Name="ChatEntry" Text="{Binding ChatMessage, Mode=TwoWay}" Placeholder="type here" Completed="Entry_Completed"/>
+            <!--<Button Text="Close chat" Clicked="Button_Clicked" />-->
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

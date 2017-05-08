@@ -12,36 +12,79 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using System.Windows.Input;
+using ShoppingListApp.Views;
 
 namespace ShoppingListApp.Models
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public class MainPageViewModel : BaseViewModel
     {
-        public string ChatMessage { get; set; }
-        public List<ShoppingList> AllShoppingLists { get; set; }
-        public List<Item> AllItems { get; set; }
-        public string Name { get; set; }
-        public ObservableCollection<Message> Messages { get; set; }
-        public ICommand OnButtonClickedCommand { get; private set; }
-
         private readonly HttpClient _client;
-        private readonly Client _signalRClient;
+        private Client _signalRClient;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private string _loggedIn; //Kontrollerar om man är inloggad.
 
+        private string _userName; //Från Facebook
+        private string _chatMessage; //Meddelandet som skall skickas
+        private string _activeListName;
+        private string _newItem; //Det som skall sparas som en ny item i listan.
+        private ShoppingList _activeList { get; set; } //Den aktiva listan
+
+        public string LoggedIn
+        {
+            get { return _loggedIn; }
+            set
+            {
+                _signalRClient = new Client(UserName, this);
+                _signalRClient.OnMessageReceived += _signalRClient_OnMessageReceived;
+                _signalRClient.Connect();
+                SetPropertyField(nameof(LoggedIn), ref _loggedIn, value);
+            }
+        }
+
+        public string UserName
+        {
+            get { return _userName; }
+            set { SetPropertyField(nameof(UserName), ref _userName, value); }
+        }
+        public string ChatMessage
+        {
+            get { return _chatMessage; }
+            set { SetPropertyField(nameof(ChatMessage), ref _chatMessage, value); }
+        }
+        public string ActiveListName
+        {
+            get { return _activeListName; }
+            set { SetPropertyField(nameof(ActiveListName), ref _activeListName, value); }
+        }
+        public string NewItem
+        {
+            get { return _newItem; }
+            set { SetPropertyField(nameof(NewItem), ref _newItem, value); }
+        }
+
+        public ObservableCollection<ShoppingList> AllShoppingLists { get; set; }
+        public ObservableCollection<Item> AllItems { get; set; }
+
+        public ObservableCollection<Item> ListItems { get; set; }
+        public ObservableCollection<Message> Messages { get; set; }
+
+        public ICommand OnButtonClickedCommand { get; private set; }
+        //public ICommand ToolbarChatBtn_ClickedCommand { get; private set; }
         public MainPageViewModel()
         {
-            AllShoppingLists = new List<ShoppingList>();
-            AllItems = new List<Item>();
+            AllShoppingLists = new ObservableCollection<ShoppingList>();
+            AllItems = new ObservableCollection<Item>();
             Messages = new ObservableCollection<Message>();
-            Name = "Androids";
+            ListItems = new ObservableCollection<Item>();
+            UserName = UserInformation.UserName;
             _client = new HttpClient();
-            _signalRClient = new Client(Name,this);
+            //_signalRClient = new Client(UserName, this);
             GetAllShoppingLists();
-            _signalRClient.Connect();
-            _signalRClient.OnMessageReceived += _signalRClient_OnMessageReceived;
+            //_signalRClient.Connect();
+            //_signalRClient.OnMessageReceived += _signalRClient_OnMessageReceived;
             //_signalRClient.OnMessageReceiveded += _signalRClient_OnMessageReceiveded;
             OnButtonClickedCommand = new Command(() => OnButtonClicked());
+            //ToolbarChatBtn_ClickedCommand = new Command(() => ToolbarChatBtn_Clicked());
         }
 
         private void _signalRClient_OnMessageReceived(object sender, string e)
@@ -64,7 +107,13 @@ namespace ShoppingListApp.Models
                 Task<string> contentsTask = _client.GetStringAsync(Url);
                 string contents = await contentsTask.ConfigureAwait(false);
                 //var respons = JsonConvert.DeserializeObject<List<ShoppingList>>(contents);
-                AllShoppingLists = JsonConvert.DeserializeObject<List<ShoppingList>>(contents);
+                AllShoppingLists = JsonConvert.DeserializeObject<ObservableCollection<ShoppingList>>(contents);
+                _activeList = AllShoppingLists.First();
+                ActiveListName = _activeList.Name;
+                foreach (var item in _activeList.Items.OrderBy(n => n.Name))
+                {
+                    ListItems.Add(item);
+                }
 
             }
             catch (Exception ex)
@@ -73,7 +122,7 @@ namespace ShoppingListApp.Models
             }
             return model;
         }
-        
+
         //private void onMessageRecieved(object sender, Message m)
         //{
         //    var dummy = m;
@@ -81,9 +130,14 @@ namespace ShoppingListApp.Models
 
         private void OnButtonClicked()
         {
-           _signalRClient.Send(ChatMessage);
-            ChatMessage = string.Empty;
-           
+            SendChatMessage();
         }
+
+        public void SendChatMessage()
+        {
+            _signalRClient.Send(UserName, ChatMessage);
+            ChatMessage = string.Empty;
+        }
+        
     }
 }

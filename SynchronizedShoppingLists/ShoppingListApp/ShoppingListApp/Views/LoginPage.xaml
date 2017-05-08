@@ -8,7 +8,7 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
         <StackLayout Padding="10">
-            <Button Text="Facebook" FontSize="Large" BackgroundColor="Blue" HorizontalOptions="FillAndExpand"/>
+            <Button x:Name="BtnFacebook" Clicked="BtnFacebook_Clicked" Text="Facebook" FontSize="Large" BackgroundColor="Blue" HorizontalOptions="FillAndExpand"/>
             <Button Text="Google" FontSize="Large" BackgroundColor="Red" HorizontalOptions="FillAndExpand"/>
             <Entry Text="{Binding UserName, Mode=TwoWay}" Placeholder="Username" />
             <Label Text="Login" FontSize="40"/>

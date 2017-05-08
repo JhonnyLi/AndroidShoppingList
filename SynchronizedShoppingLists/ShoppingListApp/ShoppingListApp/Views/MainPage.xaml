@@ -4,18 +4,10 @@
              xmlns:local="clr-namespace:ShoppingListApp"
              x:Class="ShoppingListApp.MainPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="TestItem"></ToolbarItem>
+        <ToolbarItem x:Name="ToolbarChatBtn" Text="Chat" Clicked="ToolbarChatBtn_Clicked"></ToolbarItem>
+        <ToolbarItem Text="{Binding UserName, Mode=TwoWay}"></ToolbarItem>
     </ContentPage.ToolbarItems>
     <StackLayout>
-        <!--<StackLayout Padding="40">
-            --><!--<Label Text="Regular label" />--><!--
-            <Label Text ="{Binding Name, Mode=TwoWay}" FontSize="16" VerticalOptions="CenterAndExpand" />
-            <Entry Placeholder="type here" />
-            <Button Text="OK" />
-            <BoxView Color="Yellow" />
-            <Switch />
-        </StackLayout>-->
-       
         <!--<Label Text="ShoppingLists" 
                VerticalOptions="Center" 
                HorizontalOptions="Center" />-->
@@ -40,7 +32,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>--><!--
         </ListView>-->
-        <ListView x:Name="ShoppingListChatView" ItemsSource ="{Binding Messages, Mode=TwoWay}">
+        <!--<ListView x:Name="ShoppingListChatView" ItemsSource ="{Binding Messages, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate >
                     <ViewCell >
@@ -54,15 +46,33 @@
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
+        </ListView>-->
+        <Label Text ="{Binding ActiveListName}" FontSize="20" />
+        <ListView x:Name="ShoppingListChatView" ItemsSource ="{Binding ListItems, Mode=TwoWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate >
+                    <ViewCell >
+                        <ViewCell.View >
+                            <StackLayout Orientation="Horizontal">
+                                <Switch IsToggled="{Binding Active}}"/>
+                                <!--<Entry Text="{Binding Name, Mode=TwoWay}" Placeholder="{Binding Name}" FontSize="16"  VerticalOptions="FillAndExpand" />-->
+                                <Label Text ="{Binding Name}" FontSize="16"  VerticalOptions="FillAndExpand" />
+                                <Label Text ="{Binding Comment}" FontSize="8"/>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-        <StackLayout Padding="20">
-            <!--<Label Text="Regular label" />-->
-            <Label Text ="{Binding Name, Mode=TwoWay}" FontSize="16" VerticalOptions="CenterAndExpand" />
+        <Entry x:Name="EntryAddItem" Text="{Binding NewItem, Mode=TwoWay}" Placeholder="Add new items here" FontSize="16"  VerticalOptions="FillAndExpand" Completed="EntryAddItem_Completed"/>
+        <!--<StackLayout Padding="20">
+            --><!--<Label Text="Regular label" />--><!--
+            <Label Text ="{Binding UserName, Mode=TwoWay}" FontSize="16" VerticalOptions="CenterAndExpand" />
             <Entry Text="{Binding ChatMessage, Mode=TwoWay}" Placeholder="type here" />
             <Button Text="OK" Command="{Binding OnButtonClickedCommand}" />
             <BoxView Color="Yellow" />
             <Switch />
-        </StackLayout>
+        </StackLayout>-->
     </StackLayout>
 
 </ContentPage>

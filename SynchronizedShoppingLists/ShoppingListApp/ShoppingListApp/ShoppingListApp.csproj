@@ -38,12 +38,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\ShoppingList.cs" />
+    <Compile Include="Models\UserInformation.cs" />
     <Compile Include="Shared\Client.cs" />
-    <Compile Include="Views\LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
+    <Compile Include="Views\ChatPage.xaml.cs">
+      <DependentUpon>ChatPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -119,7 +121,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\LoginPage.xaml">
+    <EmbeddedResource Include="Views\ChatPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

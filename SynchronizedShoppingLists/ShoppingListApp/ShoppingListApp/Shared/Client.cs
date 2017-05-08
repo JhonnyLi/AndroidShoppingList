@@ -2,7 +2,9 @@
 using ShoppingListApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Json;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,44 +12,63 @@ namespace ShoppingListApp.Shared
 {
     public class Client
     {
-        private readonly string _platform;
+        private readonly string _userName;
         private MainPageViewModel _vm;
         private readonly HubConnection _connection;
         private readonly IHubProxy _proxy;
 
         public event EventHandler<string> OnMessageReceived;
 
-        public Client(string platform, MainPageViewModel vm)
+        public Client(string userName, MainPageViewModel vm)
         {
-            _platform = platform;
+            _userName = userName;
             _vm = vm;
-            _connection = new HubConnection("http://sync.jhonny.se/");
+            var queryData = new Dictionary<string, string>();
+            queryData.Add("username", _userName);
+            //_connection = new HubConnection("http://localhost:3768/signalr");
+            _connection = new HubConnection("http://sync.jhonny.se/", queryData);
+            //_connection.Items.Add("userName", _userName);
             _proxy = _connection.CreateHubProxy("SyncHub");
+            
         }
         public async Task Connect()
         {
             try
             {
+                
                 await _connection.Start();
 
-                _proxy.On("broadcastMessage", (string platform, string message) =>
+                _proxy.On("broadcastMessage", (string userName, string message) =>
                 {
-                    _vm.Messages.Add(new Message() { Name = platform, Text = message });
+                    _vm.Messages.Add(new Message() { Name = userName, Text = message });
                     //if (OnMessageReceived != null)
                         //OnMessageReceived(this, string.Format("{0}: {1}", platform, message));
                 });
-                _vm.Messages.Add(new Message { Name = _platform, Text = "Connected" });
+                _proxy.On("connectionMessage", (string userName, string message) =>
+                {
+                    _vm.Messages.Add(new Message() { Name = userName, Text = message });
+                    //if (OnMessageReceived != null)
+                    //OnMessageReceived(this, string.Format("{0}: {1}", platform, message));
+                });
+                //_proxy.On("contextMessage", (string serial) =>
+                //{
+                //    var contextObject = JsonValue.Parse(serial);
+                //    var dummy = "";
+                //    //if (OnMessageReceived != null)
+                //    //OnMessageReceived(this, string.Format("{0}: {1}", platform, message));
+                //});
+                //_vm.Messages.Add(new Message { Name = _vm.UserName, Text = "Connected" });
                 //await Send(_platform + " : Connected");
             }
-            catch (Exception e)
+            catch (HttpRequestException e)
             {
                 var err = e.Message;
             }
         }
 
-        public Task Send(string message)
+        public Task Send(string name, string message)
         {
-            return _proxy.Invoke("Send", _platform, message);
+            return _proxy.Invoke("Send", name, message);
         }
     }
 }
