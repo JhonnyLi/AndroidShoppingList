@@ -34,6 +34,11 @@ namespace ShoppingListApp.Views
             ChatEntry.Focus();
         }
 
+        private void ChatEntry_Unfocused(object sender, FocusEventArgs e)
+        {
+            ChatEntry.Focus();
+        }
+
         //private void Button_Clicked(object sender, EventArgs e)
         //{
         //    Navigation.PopModalAsync();

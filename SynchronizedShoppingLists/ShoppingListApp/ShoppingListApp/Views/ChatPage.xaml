@@ -22,7 +22,7 @@
         </ListView>
         <StackLayout Padding="20">
             <Label Text ="{Binding UserName, Mode=TwoWay}" FontSize="16" VerticalOptions="CenterAndExpand" HorizontalOptions="End"/>
-            <Entry x:Name="ChatEntry" Text="{Binding ChatMessage, Mode=TwoWay}" Placeholder="type here" Completed="Entry_Completed"/>
+            <Entry x:Name="ChatEntry" Text="{Binding ChatMessage, Mode=TwoWay}" Unfocused="ChatEntry_Unfocused" Placeholder="type here" Completed="Entry_Completed"/>
             <!--<Button Text="Close chat" Clicked="Button_Clicked" />-->
         </StackLayout>
     </StackLayout>

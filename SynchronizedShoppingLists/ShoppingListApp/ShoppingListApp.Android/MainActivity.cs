@@ -23,8 +23,15 @@ namespace ShoppingListApp.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+            try
+            {
 
             base.OnCreate(bundle);
+            }
+            catch(Exception exxx)
+            {
+                var fitta = "";
+            }
             CrashManager.Register(this, _hockeyAppApiKey);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());

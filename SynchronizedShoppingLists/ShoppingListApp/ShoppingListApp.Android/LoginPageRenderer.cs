@@ -31,7 +31,7 @@ namespace ShoppingListApp.Droid
 
             var auth = new OAuth2Authenticator(
                 clientId: ApiKeys.FacebookApi,
-                scope: "", // the scopes for the particular API you're accessing, delimited by "+" symbols
+                scope: "email", // the scopes for the particular API you're accessing, delimited by "+" symbols
                 authorizeUrl: new Uri("https://m.facebook.com/dialog/oauth/"),
                 redirectUrl: new Uri("https://www.facebook.com/connect/login_success.html"));
 
@@ -53,25 +53,20 @@ namespace ShoppingListApp.Droid
                 {
                     var request = new OAuth2Request(
                             "GET",
-                            new Uri("https://graph.facebook.com/me?fields=name,picture"),
-                            //new Uri("https://graph.facebook.com/me"),
+                            new Uri("https://graph.facebook.com/me?fields=name,email,picture"),
                             null,
                             e.Account);
                     var fbResponse = await request.GetResponseAsync();
                     var fbUser = JsonValue.Parse(fbResponse.GetResponseText());
                     UserInformation.UserName = fbUser["name"];
-                    //UserInformation.Email = fbUser["email"];
-                    var photo = fbUser["picture"]["data"]["url"];
+                    UserInformation.Email = fbUser["email"];
+                    var photo = fbUser["picture"]["data"]["url"]; //Denna blev aldrig implementerad
                 }
                 catch (Exception ex)
                 {
                     var message = ex.Message;
                 }
 
-
-                //UserInformation.Photo = StreamImageSource
-                //UserInformation.UserName = name;
-                //ShoppingListApp.Models.ApiKeys.FaceBookEventArgs = eventArgs;
                 App.SuccessfulLoginAction.Invoke();
                 ApiKeys.SaveToken(e.Account.Properties["access_token"]);
                 // Use eventArgs.Account to do wonderful things
