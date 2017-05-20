@@ -30,7 +30,7 @@ namespace ShoppingListApp.Droid
             }
             catch(Exception exxx)
             {
-                var fitta = "";
+                throw exxx;
             }
             CrashManager.Register(this, _hockeyAppApiKey);
             global::Xamarin.Forms.Forms.Init(this, bundle);

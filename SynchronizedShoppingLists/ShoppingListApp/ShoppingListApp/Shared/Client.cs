@@ -7,6 +7,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace ShoppingListApp.Shared
 {
@@ -35,8 +37,16 @@ namespace ShoppingListApp.Shared
         {
             try
             {
-                
-                await _connection.Start();
+                _proxy.On("listMessage", (string userName, ShoppingList list) =>
+                {
+                    _vm.ListItems.Clear();
+                    foreach(var item in list.Items)
+                    {
+                        _vm.ListItems.Add(item);
+                    }
+                    _vm._activeList = list;
+                    _vm.Messages.Add(new Message() { Name = userName, Text = "listUpdateMessage" });
+                });
 
                 _proxy.On("broadcastMessage", (string userName, string message) =>
                 {
@@ -50,6 +60,10 @@ namespace ShoppingListApp.Shared
                     //if (OnMessageReceived != null)
                     //OnMessageReceived(this, string.Format("{0}: {1}", platform, message));
                 });
+                await _connection.Start();
+                //listUpdateMessage
+
+
                 //_proxy.On("contextMessage", (string serial) =>
                 //{
                 //    var contextObject = JsonValue.Parse(serial);
@@ -69,6 +83,11 @@ namespace ShoppingListApp.Shared
         public Task Send(string name, string message)
         {
             return _proxy.Invoke("Send", name, message);
+        }
+        public Task SendList(string updatedList)
+        {
+            //var listToSend = JsonConvert.SerializeObject(_vm.ListItems);
+            return _proxy.Invoke("SendList", updatedList);
         }
     }
 }

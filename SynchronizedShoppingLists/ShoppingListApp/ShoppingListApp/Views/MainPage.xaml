@@ -65,6 +65,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <Entry x:Name="EntryAddItem" Text="{Binding NewItem, Mode=TwoWay}" Placeholder="Add new items here" FontSize="16"  VerticalOptions="FillAndExpand" Completed="EntryAddItem_Completed"/>
+        <Button Text="Save changes" Command="{Binding SaveListCommand}"></Button>
         <!--<StackLayout Padding="20">
             --><!--<Label Text="Regular label" />--><!--
             <Label Text ="{Binding UserName, Mode=TwoWay}" FontSize="16" VerticalOptions="CenterAndExpand" />

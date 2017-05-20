@@ -11,7 +11,7 @@ namespace ShoppingListApp.Models
     {
         public static string UserName { get; set; }
         public static string Email { get; set; }
-        public static Image Photo { get; set; }
+        //public static Image Photo { get; set; }
 
     }
 }

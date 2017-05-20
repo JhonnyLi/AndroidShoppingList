@@ -49,6 +49,7 @@ namespace ShoppingListApp
                 Name = _vm.NewItem,
                 Comment = ""
             };
+            _vm.UpdateActiveList(newItem);
             _vm.ListItems.Add(newItem);
         }
     }

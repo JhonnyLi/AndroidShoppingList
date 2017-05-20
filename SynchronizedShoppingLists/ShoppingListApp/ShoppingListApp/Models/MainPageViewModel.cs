@@ -27,7 +27,7 @@ namespace ShoppingListApp.Models
         private string _chatMessage; //Meddelandet som skall skickas
         private string _activeListName;
         private string _newItem; //Det som skall sparas som en ny item i listan.
-        private ShoppingList _activeList { get; set; } //Den aktiva listan
+        public ShoppingList _activeList { get; set; } //Den aktiva listan
 
         public string LoggedIn
         {
@@ -68,7 +68,8 @@ namespace ShoppingListApp.Models
         public ObservableCollection<Item> ListItems { get; set; }
         public ObservableCollection<Message> Messages { get; set; }
 
-        public ICommand OnButtonClickedCommand { get; private set; }
+        //public ICommand ChatMessageButtonClickedCommand { get; private set; }
+        public ICommand SaveListCommand { get; private set; }
         //public ICommand ToolbarChatBtn_ClickedCommand { get; private set; }
         public MainPageViewModel()
         {
@@ -83,7 +84,8 @@ namespace ShoppingListApp.Models
             //_signalRClient.Connect();
             //_signalRClient.OnMessageReceived += _signalRClient_OnMessageReceived;
             //_signalRClient.OnMessageReceiveded += _signalRClient_OnMessageReceiveded;
-            OnButtonClickedCommand = new Command(() => OnButtonClicked());
+            //ChatMessageButtonClickedCommand = new Command(() => ChatMessageButtonClicked());
+            SaveListCommand = new Command(() => SaveListClicked());
             //ToolbarChatBtn_ClickedCommand = new Command(() => ToolbarChatBtn_Clicked());
         }
 
@@ -128,9 +130,13 @@ namespace ShoppingListApp.Models
         //    var dummy = m;
         //}
 
-        private void OnButtonClicked()
+        //private void ChatMessageButtonClicked()
+        //{
+        //    SendChatMessage();
+        //}
+        private void SaveListClicked()
         {
-            SendChatMessage();
+            SendListChange();
         }
 
         public void SendChatMessage()
@@ -138,6 +144,15 @@ namespace ShoppingListApp.Models
             _signalRClient.Send(UserName, ChatMessage);
             ChatMessage = string.Empty;
         }
-        
+        public void SendListChange()
+        {
+            _signalRClient.SendList(JsonConvert.SerializeObject(_activeList));
+        }
+
+        public void UpdateActiveList(Item newItem)
+        {
+            _activeList.Items.Add(newItem);
+        }
+
     }
 }
