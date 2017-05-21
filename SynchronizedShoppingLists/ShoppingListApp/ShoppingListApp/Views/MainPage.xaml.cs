@@ -52,5 +52,6 @@ namespace ShoppingListApp
             _vm.UpdateActiveList(newItem);
             _vm.ListItems.Add(newItem);
         }
+
     }
 }

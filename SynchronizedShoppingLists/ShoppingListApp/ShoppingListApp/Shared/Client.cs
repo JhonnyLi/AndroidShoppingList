@@ -27,9 +27,7 @@ namespace ShoppingListApp.Shared
             _vm = vm;
             var queryData = new Dictionary<string, string>();
             queryData.Add("username", _userName);
-            //_connection = new HubConnection("http://localhost:3768/signalr");
             _connection = new HubConnection("http://sync.jhonny.se/", queryData);
-            //_connection.Items.Add("userName", _userName);
             _proxy = _connection.CreateHubProxy("SyncHub");
             
         }
@@ -51,28 +49,12 @@ namespace ShoppingListApp.Shared
                 _proxy.On("broadcastMessage", (string userName, string message) =>
                 {
                     _vm.Messages.Add(new Message() { Name = userName, Text = message });
-                    //if (OnMessageReceived != null)
-                        //OnMessageReceived(this, string.Format("{0}: {1}", platform, message));
                 });
                 _proxy.On("connectionMessage", (string userName, string message) =>
                 {
                     _vm.Messages.Add(new Message() { Name = userName, Text = message });
-                    //if (OnMessageReceived != null)
-                    //OnMessageReceived(this, string.Format("{0}: {1}", platform, message));
                 });
                 await _connection.Start();
-                //listUpdateMessage
-
-
-                //_proxy.On("contextMessage", (string serial) =>
-                //{
-                //    var contextObject = JsonValue.Parse(serial);
-                //    var dummy = "";
-                //    //if (OnMessageReceived != null)
-                //    //OnMessageReceived(this, string.Format("{0}: {1}", platform, message));
-                //});
-                //_vm.Messages.Add(new Message { Name = _vm.UserName, Text = "Connected" });
-                //await Send(_platform + " : Connected");
             }
             catch (HttpRequestException e)
             {
@@ -86,7 +68,6 @@ namespace ShoppingListApp.Shared
         }
         public Task SendList(string updatedList)
         {
-            //var listToSend = JsonConvert.SerializeObject(_vm.ListItems);
             return _proxy.Invoke("SendList", updatedList);
         }
     }

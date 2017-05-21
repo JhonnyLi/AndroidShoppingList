@@ -13,6 +13,7 @@ namespace ShoppingListApp.Models
         public bool Active { get; set; }
         public string Comment { get; set; }
         public bool Deleted { get; set; }
+        public bool Editable { get; set; } = true;
 
     }
 }

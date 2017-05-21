@@ -64,13 +64,12 @@ namespace ShoppingListApp.Models
 
         public ObservableCollection<ShoppingList> AllShoppingLists { get; set; }
         public ObservableCollection<Item> AllItems { get; set; }
-
         public ObservableCollection<Item> ListItems { get; set; }
         public ObservableCollection<Message> Messages { get; set; }
-
-        //public ICommand ChatMessageButtonClickedCommand { get; private set; }
         public ICommand SaveListCommand { get; private set; }
-        //public ICommand ToolbarChatBtn_ClickedCommand { get; private set; }
+        public ICommand DeleteBtnCommand { get; private set; }
+        public ICommand DeleteItemsCommand { get; private set; }
+
         public MainPageViewModel()
         {
             AllShoppingLists = new ObservableCollection<ShoppingList>();
@@ -79,14 +78,17 @@ namespace ShoppingListApp.Models
             ListItems = new ObservableCollection<Item>();
             UserName = UserInformation.UserName;
             _client = new HttpClient();
-            //_signalRClient = new Client(UserName, this);
             GetAllShoppingLists();
-            //_signalRClient.Connect();
-            //_signalRClient.OnMessageReceived += _signalRClient_OnMessageReceived;
-            //_signalRClient.OnMessageReceiveded += _signalRClient_OnMessageReceiveded;
-            //ChatMessageButtonClickedCommand = new Command(() => ChatMessageButtonClicked());
             SaveListCommand = new Command(() => SaveListClicked());
-            //ToolbarChatBtn_ClickedCommand = new Command(() => ToolbarChatBtn_Clicked());
+            DeleteItemsCommand = new Command(() => DeleteBtnClicked());
+        }
+
+        private void DeleteBtnClicked()
+        {
+           foreach(var item in ListItems)
+            {
+                item.Deleted = item.Active ? true : false;
+            }
         }
 
         private void _signalRClient_OnMessageReceived(object sender, string e)
@@ -108,7 +110,6 @@ namespace ShoppingListApp.Models
                 _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 Task<string> contentsTask = _client.GetStringAsync(Url);
                 string contents = await contentsTask.ConfigureAwait(false);
-                //var respons = JsonConvert.DeserializeObject<List<ShoppingList>>(contents);
                 AllShoppingLists = JsonConvert.DeserializeObject<ObservableCollection<ShoppingList>>(contents);
                 _activeList = AllShoppingLists.First();
                 ActiveListName = _activeList.Name;
@@ -125,15 +126,6 @@ namespace ShoppingListApp.Models
             return model;
         }
 
-        //private void onMessageRecieved(object sender, Message m)
-        //{
-        //    var dummy = m;
-        //}
-
-        //private void ChatMessageButtonClicked()
-        //{
-        //    SendChatMessage();
-        //}
         private void SaveListClicked()
         {
             SendListChange();
