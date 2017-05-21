@@ -26,11 +26,13 @@
             </ListView.ItemTemplate>
 
 
-            --><!--<ListView.ItemTemplate>
+            -->
+        <!--<ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding Name}" />
                 </DataTemplate>
-            </ListView.ItemTemplate>--><!--
+            </ListView.ItemTemplate>-->
+        <!--
         </ListView>-->
         <!--<ListView x:Name="ShoppingListChatView" ItemsSource ="{Binding Messages, Mode=TwoWay}">
             <ListView.ItemTemplate>
@@ -55,8 +57,9 @@
                         <ViewCell.View >
                             <StackLayout Orientation="Horizontal">
                                 <Switch IsToggled="{Binding Active}}"/>
+                                <Button Text="Delete" IsVisible="{Binding Active, Mode=TwoWay}"/>
                                 <!--<Entry Text="{Binding Name, Mode=TwoWay}" Placeholder="{Binding Name}" FontSize="16"  VerticalOptions="FillAndExpand" />-->
-                                <Label Text ="{Binding Name}" FontSize="16"  VerticalOptions="FillAndExpand" />
+                                <Label Text ="{Binding Name}" FontSize="16" VerticalOptions="FillAndExpand" />
                                 <Label Text ="{Binding Comment}" FontSize="8"/>
                             </StackLayout>
                         </ViewCell.View>
@@ -67,7 +70,9 @@
         <Entry x:Name="EntryAddItem" Text="{Binding NewItem, Mode=TwoWay}" Placeholder="Add new items here" FontSize="16"  VerticalOptions="FillAndExpand" Completed="EntryAddItem_Completed"/>
         <Button Text="Save changes" Command="{Binding SaveListCommand}"></Button>
         <!--<StackLayout Padding="20">
-            --><!--<Label Text="Regular label" />--><!--
+            -->
+        <!--<Label Text="Regular label" />-->
+        <!--
             <Label Text ="{Binding UserName, Mode=TwoWay}" FontSize="16" VerticalOptions="CenterAndExpand" />
             <Entry Text="{Binding ChatMessage, Mode=TwoWay}" Placeholder="type here" />
             <Button Text="OK" Command="{Binding OnButtonClickedCommand}" />

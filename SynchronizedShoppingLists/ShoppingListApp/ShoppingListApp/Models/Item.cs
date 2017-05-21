@@ -10,8 +10,9 @@ namespace ShoppingListApp.Models
     {
         public Guid ItemId { get; set; }
         public string Name { get; set; }
-        public bool Active { get; set; } //Om saken är köpt eller liknande så är den inte längre aktiv.
-        public string Comment { get; set; } 
+        public bool Active { get; set; }
+        public string Comment { get; set; }
+        public bool Deleted { get; set; }
 
     }
 }
